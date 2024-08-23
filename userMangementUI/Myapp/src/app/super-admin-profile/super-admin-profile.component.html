@@ -1,0 +1,39 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Super Admin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdmin']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/role']">Role</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdminProfile', userId]">Profile</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile Content -->
+<div class="container mt-4">
+  <div *ngIf="userData" class="profile-container">
+    <h2>Super Admin Profile</h2>
+    <img [src]="'data:image/png;base64,' + userData.photo" alt="User Photo" *ngIf="userData.photo" class="profile-photo">
+    <p><strong>First Name:</strong> {{ userData.nom }}</p>
+    <p><strong>Last Name:</strong> {{ userData.prenom }}</p>
+    <p><strong>Email:</strong> {{ userData.email }}</p>
+    <p><strong>Phone Number:</strong> {{ userData.numeroTelephone }}</p>
+    <p><strong>Date of Birth:</strong> {{ userData.dateDeNaissance | date:'yyyy-MM-dd' }}</p>
+    <a [routerLink]="['/updateSuperAdmin', userData.id]" class="btn btn-primary">Update Profile</a>
+  </div>
+</div>

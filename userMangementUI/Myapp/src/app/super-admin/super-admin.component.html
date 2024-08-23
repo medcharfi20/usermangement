@@ -1,0 +1,58 @@
+<div class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Super Admin </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSuperAdmin" aria-controls="navbarSuperAdmin" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSuperAdmin">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/role">Role</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdminProfile', userId]">Profile</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container mt-4 flex-grow-1">
+    <h1>Super Admin </h1>
+    <p>Welcome, Super Admin! Here you can manage administrators and oversee the entire system.</p>
+    <div class="card mb-4">
+      <img src="/assets/images/superadmin.png" class="card-img-top" alt="Dashboard Image">
+      <div class="card-body">
+        <h5 class="card-title">System Overview</h5>
+        <p class="card-text">This system allows you to have an overview of all the activities within the system. You can manage roles, administrators, and view detailed reports.</p>
+      </div>
+    </div>
+    <div class="card-deck">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Manage Roles</h5>
+          <p class="card-text">Define and assign roles to users to ensure they have appropriate access levels.</p>
+          <a [routerLink]="['/role']" class="btn btn-primary">Go to Roles</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Manage Admins</h5>
+          <p class="card-text">Add, update, or remove administrators from the system.</p>
+          <a [routerLink]="['/admin']" class="btn btn-primary">Go to Admins</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">View Profile</h5>
+          <p class="card-text">Edit your profile information and change your password.</p>
+          <a [routerLink]="['/superAdminProfile', userId]">Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

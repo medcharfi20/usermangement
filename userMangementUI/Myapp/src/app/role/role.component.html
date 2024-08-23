@@ -1,0 +1,47 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Super Admin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdmin']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/role']" (click)="showList()">Role</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdminProfile', userId]">Profile</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Content Area -->
+<div class="container mt-4 flex-grow-1">
+  <h2>Role Management</h2>
+  <p class="mb-4">Manage user roles effectively to ensure appropriate access levels within the system.</p>
+
+  <!-- Navigation for managing roles -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="showAddRoleForm" (click)="showForm()">Add Role</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="showRoleList" (click)="showList()">List Roles</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Role Management Components -->
+  <app-add-role *ngIf="showAddRoleForm"></app-add-role>
+  <app-role-list *ngIf="showRoleList"></app-role-list>
+</div>

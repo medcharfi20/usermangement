@@ -1,0 +1,139 @@
+<div class="container mt-5">
+    <h2 class="mb-4">Add New User</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="nom">First Name</label>
+        <input
+          id="nom"
+          formControlName="nom"
+          class="form-control"
+          type="text"
+          placeholder="Enter first name"
+          [ngClass]="{ 'is-invalid': userForm.get('nom')?.invalid && userForm.get('nom')?.touched }"
+        />
+        <div *ngIf="userForm.get('nom')?.invalid && userForm.get('nom')?.touched" class="invalid-feedback">
+          First name is required.
+        </div>
+      </div>
+  
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="prenom">Last Name</label>
+        <input
+          id="prenom"
+          formControlName="prenom"
+          class="form-control"
+          type="text"
+          placeholder="Enter last name"
+          [ngClass]="{ 'is-invalid': userForm.get('prenom')?.invalid && userForm.get('prenom')?.touched }"
+        />
+        <div *ngIf="userForm.get('prenom')?.invalid && userForm.get('prenom')?.touched" class="invalid-feedback">
+          Last name is required.
+        </div>
+      </div>
+  
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          class="form-control"
+          type="email"
+          placeholder="Enter email"
+          [ngClass]="{ 'is-invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched }"
+        />
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="invalid-feedback">
+          <ng-container *ngIf="userForm.get('email')?.hasError('required')">Valid email is required.</ng-container>
+          <ng-container *ngIf="userForm.get('email')?.hasError('emailFormat')">
+            <ng-container *ngIf="userForm.get('email')?.errors?.['emailFormat']">
+              Email address is invalid.
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+  
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input
+            id="password"
+            formControlName="password"
+            class="form-control"
+            [type]="passwordVisible ? 'text' : 'password'"
+            placeholder="Enter password"
+            [ngClass]="{ 'is-invalid': userForm.get('password')?.invalid && userForm.get('password')?.touched }"
+          />
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
+            >
+              <i [ngClass]="passwordVisible ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="invalid-feedback">
+          Password is required.
+        </div>
+      </div>
+  
+      <!-- Date of Birth -->
+      <div class="form-group">
+        <label for="dateDeNaissance">Date of Birth</label>
+        <input
+          id="dateDeNaissance"
+          formControlName="dateDeNaissance"
+          class="form-control"
+          type="date"
+          [ngClass]="{ 'is-invalid': userForm.get('dateDeNaissance')?.invalid && userForm.get('dateDeNaissance')?.touched }"
+        />
+        <div *ngIf="userForm.get('dateDeNaissance')?.invalid && userForm.get('dateDeNaissance')?.touched" class="invalid-feedback">
+          Date of Birth is required.
+        </div>
+      </div>
+  
+      <!-- Phone Number -->
+      <div class="form-group">
+        <label for="numeroTelephone">Phone Number</label>
+        <input
+          id="numeroTelephone"
+          formControlName="numeroTelephone"
+          class="form-control"
+          type="text"
+          placeholder="Enter phone number"
+          [ngClass]="{ 'is-invalid': userForm.get('numeroTelephone')?.invalid && userForm.get('numeroTelephone')?.touched }"
+        />
+        <div *ngIf="userForm.get('numeroTelephone')?.invalid && userForm.get('numeroTelephone')?.touched" class="invalid-feedback">
+          <ng-container *ngIf="userForm.get('numeroTelephone')?.hasError('required')">Phone Number is required.</ng-container>
+          <ng-container *ngIf="userForm.get('numeroTelephone')?.hasError('phoneNumber')">
+            <ng-container *ngIf="userForm.get('numeroTelephone')?.errors?.['phoneNumber']">
+              Phone Number is invalid.
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+  
+      <!-- File Upload -->
+      <div class="form-group">
+        <label for="file">Profile Photo</label>
+        <input
+          id="file"
+          type="file"
+          (change)="onFileSelected($event)"
+          class="form-control-file"
+        />
+        <div *ngIf="!selectedFile && userForm.get('file')?.touched" class="invalid-feedback">
+          Profile Photo is required.
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Add User</button>
+    </form>
+  </div>
+  

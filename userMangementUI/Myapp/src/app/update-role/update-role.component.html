@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Super Admin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdmin']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/role']">Role</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdminProfile', 1]">Profile</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="update-role-container container mt-5 p-4 shadow-lg rounded">
+  <form (ngSubmit)="updateRole()">
+    <h2 class="mb-4 text-center">Update Role</h2>
+    <div class="form-group mb-3">
+      <label for="name" class="form-label">Role Name</label>
+      <input type="text" id="name" [(ngModel)]="role.name" name="name" class="form-control" required>
+    </div>
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">Role Description</label>
+      <input type="text" id="description" [(ngModel)]="role.description" name="description" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Update Role</button>
+  </form>
+
+  <!-- Back to Role button -->
+  <div class="text-center mt-4">
+    <button class="btn btn-secondary" [routerLink]="['/role']">Back to Role List</button>
+  </div>
+</div>

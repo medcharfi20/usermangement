@@ -1,0 +1,47 @@
+<div class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">User Management</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/superAdmin']">Super Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/adminpage']">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/user']">User</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="flex-grow-1">
+    <div class="container mt-4">
+      <div class="jumbotron">
+        <h1 class="display-4">User Management Service</h1>
+        <p class="lead">
+          Welcome to our User Management Service. This service is designed to streamline the process of managing users within an organization, ensuring that each user has the appropriate level of access and permissions based on their role. The primary goal of our service is to enhance security, improve efficiency, and provide a seamless user experience.
+        </p>
+        <p>
+          Our user management system allows for the creation, modification, and deletion of user accounts. It categorizes users into three main roles: Super Administrators, Administrators, and Standard Users. Each role comes with specific permissions and responsibilities to ensure that users can only access the functionalities relevant to their position.
+        </p>
+        <p>
+          Super Administrators have the highest level of control, with the ability to manage administrators and oversee the entire system. Administrators are responsible for managing standard users within their respective domains, ensuring that all user activities are monitored and managed effectively. Standard Users can access the services and features they are authorized for and can modify their personal profiles.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+      <span>&copy; Hydatis 2024</span>
+    </div>
+  </footer>
+</div>

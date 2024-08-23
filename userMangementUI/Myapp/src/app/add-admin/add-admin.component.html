@@ -1,0 +1,94 @@
+<form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
+  <!-- Nom (Last Name) Field -->
+  <div class="form-group">
+    <label for="nom">FirstName</label>
+    <input id="nom" formControlName="nom" type="text" class="form-control" 
+           [ngClass]="{'is-invalid': adminForm.get('nom')?.touched && adminForm.get('nom')?.invalid}" />
+    <div *ngIf="adminForm.get('nom')?.touched && adminForm.get('nom')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('nom')?.errors?.['required']">Nom is required.</div>
+    </div>
+  </div>
+
+  <!-- Prénom (First Name) Field -->
+  <div class="form-group">
+    <label for="prenom">LastName</label>
+    <input id="prenom" formControlName="prenom" type="text" class="form-control" 
+           [ngClass]="{'is-invalid': adminForm.get('prenom')?.touched && adminForm.get('prenom')?.invalid}" />
+    <div *ngIf="adminForm.get('prenom')?.touched && adminForm.get('prenom')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('prenom')?.errors?.['required']">Prénom is required.</div>
+    </div>
+  </div>
+
+  <!-- Email Field -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" class="form-control" 
+           [ngClass]="{'is-invalid': adminForm.get('email')?.touched && adminForm.get('email')?.invalid}" />
+    <div *ngIf="adminForm.get('email')?.touched && adminForm.get('email')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('email')?.errors?.['required']">Email cannot be empty.</div>
+    </div>
+  </div>
+
+  <!-- Password Field -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password" formControlName="password" type="{{passwordVisible ? 'text' : 'password'}}" 
+           class="form-control" 
+           [ngClass]="{'is-invalid': adminForm.get('password')?.touched && adminForm.get('password')?.invalid}" />
+    <button type="button" (click)="togglePasswordVisibility()" class="btn btn-secondary">Toggle Password</button>
+    <div *ngIf="adminForm.get('password')?.touched && adminForm.get('password')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('password')?.errors?.['required']">Password cannot be empty.</div>
+    </div>
+  </div>
+
+  <!-- Date of Birth Field -->
+  <div class="form-group">
+    <label for="dateDeNaissance">Date of Birth</label>
+    <input id="dateDeNaissance" formControlName="dateDeNaissance" type="date" class="form-control" 
+           [ngClass]="{'is-invalid': adminForm.get('dateDeNaissance')?.touched && adminForm.get('dateDeNaissance')?.invalid}" />
+    <div *ngIf="adminForm.get('dateDeNaissance')?.touched && adminForm.get('dateDeNaissance')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('dateDeNaissance')?.errors?.['required']">Date of Birth cannot be empty.</div>
+    </div>
+  </div>
+
+  <!-- Phone Number Field -->
+  <div class="form-group">
+    <label for="numeroTelephone">Phone Number</label>
+    <input id="numeroTelephone" formControlName="numeroTelephone" type="text" class="form-control" 
+           [ngClass]="{'is-invalid': adminForm.get('numeroTelephone')?.touched && adminForm.get('numeroTelephone')?.invalid}" />
+    <div *ngIf="adminForm.get('numeroTelephone')?.touched && adminForm.get('numeroTelephone')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('numeroTelephone')?.errors?.['required']">Phone Number cannot be empty.</div>
+      <div *ngIf="adminForm.get('numeroTelephone')?.errors?.['numeroTelephone']">
+        <div *ngIf="adminForm.get('numeroTelephone')?.errors?.['numeroTelephone'] === 'notNumeric'">Phone Number must be numeric.</div>
+        <div *ngIf="adminForm.get('numeroTelephone')?.errors?.['numeroTelephone'] === 'invalidLength'">Phone Number must be 8 digits.</div>
+        <div *ngIf="adminForm.get('numeroTelephone')?.errors?.['numeroTelephone'] === 'notNumericAndInvalidLength'">Phone Number must be numeric and 8 digits.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Role Selection Field with Tooltip -->
+  <div class="form-group">
+    <label for="role">Role</label>
+    <select id="role" formControlName="role" class="form-control" 
+            [ngClass]="{'is-invalid': adminForm.get('role')?.touched && adminForm.get('role')?.invalid}">
+      <option *ngFor="let role of roles" [value]="role.id" [title]="role.description">
+        {{ role.name }}
+      </option>
+    </select>
+    <div *ngIf="adminForm.get('role')?.touched && adminForm.get('role')?.invalid" class="invalid-feedback">
+      <div *ngIf="adminForm.get('role')?.errors?.['required']">Role must be selected.</div>
+    </div>
+  </div>
+
+  <!-- Profile Picture Upload Field -->
+  <div class="form-group">
+    <label for="profilePicture">Profile Picture</label>
+    <input id="profilePicture" type="file" (change)="onFileSelected($event)" class="form-control" />
+    <div *ngIf="!selectedFile" class="invalid-feedback">
+      Profile Picture is required.
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

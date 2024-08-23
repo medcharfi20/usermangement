@@ -1,0 +1,41 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Admin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSuperAdmin" aria-controls="navbarSuperAdmin" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSuperAdmin">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/users" (click)="showList()">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/AdminProfile']">Profile</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Content wrapper -->
+<div class="mt-4 flex-grow-1">
+  <div class="content mt-5 pt-4">
+    <h2>User Management</h2>
+    <p class="mb-4">Manage users effectively to ensure proper delegation of responsibilities and maintain security within the system.</p>
+    
+    <!-- Navigation for managing users -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="showAddUserForm" (click)="showForm()">Add User</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="showUserList" (click)="showList()">List Users</a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Conditionally rendered components based on the selected tab -->
+    <app-add-user *ngIf="showAddUserForm"></app-add-user>
+    <app-user-list *ngIf="showUserList"></app-user-list>
+  </div>
+</div>

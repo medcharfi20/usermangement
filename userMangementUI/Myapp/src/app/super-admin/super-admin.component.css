@@ -1,0 +1,7 @@
+/* super-admin.component.css */
+.card-img-top {
+    width: 50%; /* Adjust this percentage as needed */
+    max-width: 1600px; 
+    height: 100%;
+    max-height: 800 px; 
+  }

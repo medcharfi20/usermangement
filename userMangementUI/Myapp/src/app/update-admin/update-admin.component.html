@@ -1,0 +1,70 @@
+<!-- update-admin.component.html -->
+<div class="container">
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="update-form">
+    <h2>Update Admin Profile</h2>
+    
+    <!-- First Name -->
+    <div class="form-group">
+      <label for="nom">First Name</label>
+      <input id="nom" formControlName="nom" class="form-control" placeholder="Enter first name" />
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="prenom">Last Name</label>
+      <input id="prenom" formControlName="prenom" class="form-control" placeholder="Enter last name" />
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter email" />
+    </div>
+
+    <!-- Phone Number -->
+    <div class="form-group">
+      <label for="numeroTelephone">Phone Number</label>
+      <input id="numeroTelephone" formControlName="numeroTelephone" class="form-control" placeholder="Enter phone number" />
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="form-group">
+      <label for="dateDeNaissance">Date of Birth</label>
+      <input id="dateDeNaissance" formControlName="dateDeNaissance" type="date" class="form-control" />
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" [type]="passwordVisible ? 'text' : 'password'" class="form-control" placeholder="Enter password" />
+      <button type="button" (click)="togglePasswordVisibility()" class="btn btn-secondary mt-2">
+        {{ passwordVisible ? 'Hide Password' : 'Show Password' }}
+      </button>
+    </div>
+
+    <!-- Role -->
+    <div class="form-group">
+      <label for="roleId">Role</label>
+      <select id="roleId" formControlName="roleId" class="form-control">
+        <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+      </select>
+    </div>
+
+    <!-- Photo -->
+    <div class="form-group">
+      <label for="photo">Photo</label>
+      <input id="photo" type="file" (change)="onFileChange($event)" class="form-control" />
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Photo Preview" class="photo-preview" />
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Update Profile</button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="submitted && updateForm.invalid" class="alert alert-danger">
+      Please correct the errors in the form.
+    </div>
+  </form>
+</div>

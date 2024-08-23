@@ -1,0 +1,132 @@
+.role-list-container {
+  width: 100%;
+  margin: auto;
+  padding: 1rem;
+}
+
+.top-controls {
+  background-color: #f8f9fa; 
+  border-radius: 0.25rem;
+  padding: 1rem; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-bar {
+  max-width: 300px;
+  flex-grow: 1;
+  margin-right: 1rem;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin: 0; 
+}
+
+.mat-option {
+  white-space: nowrap;
+}
+
+.mat-autocomplete-panel {
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+
+.btn {
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-danger i {
+  margin-right: 0.5rem; 
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+}
+
+.btn-info i {
+  margin-right: 0.5rem;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.action-btn {
+  width: 100px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table thead th {
+  border-bottom-width: 2px;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 10%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 25%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 40%;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: 25%;
+}

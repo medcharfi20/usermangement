@@ -1,0 +1,67 @@
+<div class="role-list-container">
+  <!-- Container for the search bar and delete button -->
+  <div class="top-controls mb-3">
+    <!-- Search bar -->
+    <div class="search-bar">
+      <mat-form-field class="w-100 search-field" appearance="outline">
+        <input
+          type="text"
+          matInput
+          [formControl]="searchControl"
+          [matAutocomplete]="auto"
+          placeholder="Search by name"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let role of filteredRoles" [value]="role.name">
+            {{ role.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <!-- Button to delete all roles -->
+    <button (click)="deleteAll()" class="btn btn-danger delete-all-btn">
+      <i class="fas fa-trash-alt"></i>
+      Delete All Roles
+    </button>
+  </div>
+
+  <!-- Table to display roles -->
+  <div class="table-container">
+    <ng-container *ngIf="filteredRoles.length > 0; else noRolesFound">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of filteredRoles">
+            <td>{{ role.id }}</td>
+            <td>{{ role.name }}</td>
+            <td>{{ role.description }}</td>
+            <td>
+              <div class="d-flex">
+                <button (click)="delete(role.id)" class="btn btn-danger btn-sm me-2 action-btn">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+                <button [routerLink]="['/updateRole', role.id]" class="btn btn-info btn-sm action-btn">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+
+  <ng-template #noRolesFound>
+    <div class="alert alert-info">
+      No roles found.
+    </div>
+  </ng-template>
+</div>

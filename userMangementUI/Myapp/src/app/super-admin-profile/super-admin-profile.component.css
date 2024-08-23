@@ -1,0 +1,7 @@
+.profile-photo {
+    width: 300px; /* Small width */
+    height: 300px; /* Small height */
+    border-radius: 50%; /* Keeps the image circular */
+    object-fit: cover; /* Ensures the image covers the dimensions */
+    border: 1px solid #ddd; /* Optional: border around the image for visibility */
+}
