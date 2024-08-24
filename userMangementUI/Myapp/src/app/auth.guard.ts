@@ -17,11 +17,13 @@ export class AuthGuard implements CanActivate {
         if (isLoggedIn) {
           return true;
         } else {
+          console.log('Access denied. Redirecting to login.');
           this.router.navigate(['/login']);
           return false;
         }
       }),
-      catchError(() => {
+      catchError(error => {
+        console.error('Error occurred during authentication check', error);
         this.router.navigate(['/login']);
         return of(false);
       })

@@ -15,15 +15,16 @@ import { AddAdminComponent } from './add-admin/add-admin.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { UserComponent } from './user/user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
-import { authGuard } from './auth.guard';
+import { AuthGuard } from './auth.guard';
+import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'role', component: RoleComponent },
   { path: 'role-list', component: RoleListComponent },
   { path: 'updateRole/:id', component: UpdateRoleComponent },
-  { path: 'superAdmin', component: SuperAdminComponent },
-  { path: 'superAdminProfile/:id', component: SuperAdminProfileComponent,canActivate: [authGuard]  },
+  { path: 'superAdmin', component: SuperAdminComponent ,canActivate: [AuthGuard]},
+  { path: 'superAdminProfile/:id', component: SuperAdminProfileComponent},
   { path: 'updateSuperAdmin/:id', component: UpdateSuperAdminComponent },
   {path:'admin',component:AdminComponent},
   { path: 'admin-list', component: AdminListComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path:'add-admin',component:AddAdminComponent},
   {path:'adminpage',component:AdminPageComponent},
   {path:'users',component:UserComponent},
-  {path:'updateuser/:id',component:UpdateUserComponent}
+  {path:'updateuser/:id',component:UpdateUserComponent},
+  {path:'login',component:LoginComponent}
 
 ];
 

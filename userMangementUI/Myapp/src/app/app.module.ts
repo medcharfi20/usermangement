@@ -27,6 +27,8 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { LoginComponent } from './login/login.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -47,18 +49,20 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     AdminPageComponent,
     UserListComponent,
     AddUserComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule, // Add ReactiveFormsModule
+    ReactiveFormsModule, 
+    ToastrModule,
     HttpClientModule,
-    BrowserAnimationsModule, // Add BrowserAnimationsModule
-    MatFormFieldModule, // Add MatFormFieldModule
-    MatInputModule, // Add MatInputModule
-    MatAutocompleteModule // Add MatAutocompleteModule
+    BrowserAnimationsModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatAutocompleteModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

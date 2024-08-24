@@ -3,17 +3,17 @@ package tn.hydatis.userMangement.login;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tn.hydatis.userMangement.model.SuperAdmin;
+import tn.hydatis.userMangement.model.User;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse extends LoginResponsePrincipale {
-    private SuperAdmin superAdmin;
+public class LoginResponseUser extends LoginResponsePrincipale {
+    private User user;
 
     // Constructor that sets both the superclass fields and the superAdmin field
-    public LoginResponse(String message, boolean stayConnected, CookieDetails cookieDetails, SuperAdmin superAdmin) {
+    public LoginResponseUser(String message, boolean stayConnected, CookieDetails cookieDetails, User superAdmin) {
         super(message, stayConnected, cookieDetails); // Call to the superclass constructor
-        this.superAdmin = superAdmin;
+        this.user = user;
     }
 }

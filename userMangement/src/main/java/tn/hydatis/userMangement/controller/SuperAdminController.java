@@ -1,6 +1,9 @@
 package tn.hydatis.userMangement.controller;
 import java.io.IOException;
 import java.time.LocalDate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import tn.hydatis.userMangement.login.CookieDetails;
@@ -26,6 +30,7 @@ import tn.hydatis.userMangement.service.SuperAdminService;
 public class SuperAdminController {
     @Autowired
     private SuperAdminService superAdminService;
+    private static final Logger log = LoggerFactory.getLogger(SuperAdminController.class);
     @PostMapping
     public ResponseEntity<SuperAdmin> createSuperAdmin(
             @RequestParam String nom,
@@ -62,6 +67,7 @@ public class SuperAdminController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         SuperAdmin superAdmin = superAdminService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        log.info("Attempting login for user: {}", loginRequest.getEmail());
         if (superAdmin != null) {
             CookieDetails cookieDetails = null;
             if (loginRequest.isStayConnected()) {
@@ -84,13 +90,13 @@ public class SuperAdminController {
             superAdmin.setPassword(null);
             LoginResponse loginResponse = new LoginResponse(
                 "Login successful",
-                superAdmin,
                 loginRequest.isStayConnected(),
-                cookieDetails
+                cookieDetails,
+                superAdmin
             );
             return ResponseEntity.ok(loginResponse);
         } else {
-            return ResponseEntity.status(401).body(new LoginResponse("Invalid email or password", null, false, null));
+            return ResponseEntity.status(401).body(new LoginResponse("Invalid email or password", false,null ,null));
         }
     }
 

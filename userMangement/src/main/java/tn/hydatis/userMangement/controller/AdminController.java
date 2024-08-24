@@ -113,4 +113,5 @@ public class AdminController {
         List<Admin> admins = adminService.searchAdminsByName(query);
         return ResponseEntity.ok(admins);
     }
+    
 }

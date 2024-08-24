@@ -131,4 +131,12 @@ public class AdminService {
     public void deleteAllAdmins() {
         adminRepository.deleteAll();
     }
+    public Admin authenticate(String email, String password) {
+        Admin admin = adminRepository.findByEmail(email).orElse(null);
+        if (admin != null && passwordEncoder.matches(password, admin.getPassword())) {
+            return admin;
+        }
+        return null;
+    }
+
 }

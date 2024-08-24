@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SuperAdminService } from '../super-admin.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-super-admin-profile',
@@ -13,7 +14,8 @@ export class SuperAdminProfileComponent implements OnInit {
 
   constructor(
     private superAdminService: SuperAdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService:AuthService 
   ) {}
 
   ngOnInit(): void {
@@ -46,5 +48,8 @@ export class SuperAdminProfileComponent implements OnInit {
         }
       );
     }
+  }
+  logout() {
+    this.authService.logout();
   }
 }

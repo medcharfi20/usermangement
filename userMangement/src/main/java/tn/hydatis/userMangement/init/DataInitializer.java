@@ -22,7 +22,7 @@ public class DataInitializer {
                     "Mohamed", 
                     "Charfi", 
                     "mohamedcharfi4070@gmail.com", 
-                    "123", 
+                    "azerty", 
                     LocalDate.of(2001, 11, 28),
                     "27450039", 
                     true, 
