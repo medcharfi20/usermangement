@@ -10,10 +10,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import tn.hydatis.userMangement.exception.EmailAlreadyExistsException;
+import tn.hydatis.userMangement.login.CookieDetails;
+import tn.hydatis.userMangement.login.LoginRequest;
+import tn.hydatis.userMangement.login.LoginResponseAdmin;
 import tn.hydatis.userMangement.model.Admin;
 import tn.hydatis.userMangement.service.AdminService;
 
@@ -113,5 +126,53 @@ public class AdminController {
         List<Admin> admins = adminService.searchAdminsByName(query);
         return ResponseEntity.ok(admins);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseAdmin> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        Admin admin = adminService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        logger.info("Attempting login for admin: {}", loginRequest.getEmail());
+        if (admin != null) {
+            CookieDetails cookieDetails = null;
+            if (loginRequest.isStayConnected()) {
+                Cookie cookie = new Cookie("ADMIN_SESSION_COOKIE", "SESSION_VALUE");
+                cookie.setMaxAge(604800); // Set max age to 1 week
+                cookie.setHttpOnly(true);
+                cookie.setSecure(true);
+                cookie.setPath("/"); // Ensure the cookie is available to the entire app
+                response.addCookie(cookie);
+                cookieDetails = new CookieDetails(cookie.getName(), cookie.getValue(), cookie.getMaxAge());
+            } else {
+                // Clear any existing session cookie
+                Cookie cookie = new Cookie("ADMIN_SESSION_COOKIE", null);
+                cookie.setMaxAge(0);
+                cookie.setHttpOnly(true);
+                cookie.setSecure(true);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
+            admin.setPassword(null);
+            LoginResponseAdmin loginResponse = new LoginResponseAdmin(
+                "Login successful",
+                loginRequest.isStayConnected(),
+                cookieDetails,
+                admin
+            );
+            return ResponseEntity.ok(loginResponse);
+        } else {
+            return ResponseEntity.status(401).body(new LoginResponseAdmin("Invalid email or password", false, null, null));
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("ADMIN_SESSION_COOKIE", null);
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return ResponseEntity.noContent().build();
+    }
+
     
 }

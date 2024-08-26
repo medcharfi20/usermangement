@@ -8,11 +8,15 @@
         <div class="collapse navbar-collapse" id="navbarSuperAdmin">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/users">Users</a>
+                    <a class="nav-link" routerLink="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/AdminProfile']">Profile</a>
+                    <a class="nav-link" (click)="navigateToProfile()">Profile</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/users">Users</a>
+                </li>
+                
             </ul>
         </div>
     </nav>
@@ -40,7 +44,7 @@
                 <div class="card-body">
                     <h5 class="card-title">View Profile</h5>
                     <p class="card-text">Edit your profile information and change your password.</p>
-                    <a [routerLink]="['/AdminProfile']" class="btn btn-primary">Profile</a>
+                    <a (click)="navigateToProfile()" class="btn btn-primary">Profile</a>
                 </div>
             </div>
         </div>

@@ -67,11 +67,11 @@ public class SuperAdminController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         SuperAdmin superAdmin = superAdminService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
-        log.info("Attempting login for user: {}", loginRequest.getEmail());
+        log.info("Attempting login for SuperAdmin: {}", loginRequest.getEmail());
         if (superAdmin != null) {
             CookieDetails cookieDetails = null;
             if (loginRequest.isStayConnected()) {
-                Cookie cookie = new Cookie("SESSION_COOKIE", "SESSION_VALUE");
+                Cookie cookie = new Cookie("SUPERADMIN_SESSION_COOKIE", "SESSION_VALUE");
                 cookie.setMaxAge(604800); // Set max age to 1 week
                 cookie.setHttpOnly(true);
                 cookie.setSecure(true);
@@ -80,7 +80,7 @@ public class SuperAdminController {
                 cookieDetails = new CookieDetails(cookie.getName(), cookie.getValue(), cookie.getMaxAge());
             } else {
                 // Clear any existing session cookie
-                Cookie cookie = new Cookie("SESSION_COOKIE", null);
+                Cookie cookie = new Cookie("SUPERADMIN_SESSION_COOKIE", null);
                 cookie.setMaxAge(0);
                 cookie.setHttpOnly(true);
                 cookie.setSecure(true);
@@ -96,13 +96,13 @@ public class SuperAdminController {
             );
             return ResponseEntity.ok(loginResponse);
         } else {
-            return ResponseEntity.status(401).body(new LoginResponse("Invalid email or password", false,null ,null));
+            return ResponseEntity.status(401).body(new LoginResponse("Invalid email or password", false, null, null));
         }
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("SESSION_COOKIE", null);
+        Cookie cookie = new Cookie("SUPERADMIN_SESSION_COOKIE", null);
         cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);

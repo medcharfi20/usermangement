@@ -29,7 +29,9 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { LoginComponent } from './login/login.component';
 import { ToastrModule } from 'ngx-toastr';
-
+import { LoginAdminComponent } from './login-admin/login-admin.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { UpdateAdminProfileComponent } from './update-admin-profile/update-admin-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,10 @@ import { ToastrModule } from 'ngx-toastr';
     UserListComponent,
     AddUserComponent,
     UpdateUserComponent,
-    LoginComponent
+    LoginComponent,
+    LoginAdminComponent,
+    AdminProfileComponent,
+    UpdateAdminProfileComponent
   ],
   imports: [
     BrowserModule,

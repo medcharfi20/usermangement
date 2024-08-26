@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Admin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSuperAdmin" aria-controls="navbarSuperAdmin" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSuperAdmin">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/adminpage']">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/adminProfile', adminId]">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/users" (click)="showList()">Users</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container mt-5">
+    <!-- Profile Header -->
+    <div class="text-center mb-4">
+      <h1 class="display-3 font-weight-bold text-primary">Admin Profile</h1>
+    </div>
+  
+    <!-- Profile Information -->
+    <div *ngIf="adminData; else loading">
+      <div class="card shadow-lg border-light rounded-lg">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <!-- Photo Section -->
+              <div *ngIf="adminData.photo" class="profile-photo-container mb-4">
+                <img [src]="'data:image/png;base64,' + adminData.photo" alt="Admin Photo" class="img-fluid profile-photo">
+              </div>
+            </div>
+            <div class="col-md-8">
+              <!-- Credentials Section -->
+              <h4 class="font-weight-bold text-secondary mb-3">Credentials</h4>
+              <div class="mb-4">
+                <p class="card-text"><strong class="text-dark">Name:</strong> {{ adminData.nom }} {{ adminData.prenom }}</p>
+                <p class="card-text"><strong class="text-dark">Email:</strong> {{ adminData.email }}</p>
+                <p class="card-text"><strong class="text-dark">Date of Birth:</strong> {{ adminData.dateDeNaissance | date:'fullDate' }}</p>
+                <p class="card-text"><strong class="text-dark">Phone Number:</strong> {{ adminData.numeroTelephone }}</p>
+                <p class="card-text"><strong class="text-dark">Role:</strong> 
+                  <span class="font-weight-bold">{{ adminData.role?.name || 'N/A' }}</span> - 
+                  <span>{{ adminData.role?.description || 'No description available' }}</span>
+                </p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <!-- Navigation and Update Buttons -->
+                <button class="btn btn-primary btn-lg px-4" (click)="navigateToUpdateProfile()">Update Profile</button>
+                <button class="btn btn-outline-secondary btn-lg px-4" (click)="backToAdminPage()">Back to Admin Page</button>
+              </div>
+              <!-- Logout Button -->
+              <div class="mt-4 text-right">
+                <button class="btn btn-danger btn-lg px-4" (click)="logout()">Logout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Loading Indicator -->
+    <ng-template #loading>
+      <div class="alert alert-info text-center" role="alert">
+        <i class="fas fa-spinner fa-spin"></i> Loading profile information...
+      </div>
+    </ng-template>
+  </div>
+  

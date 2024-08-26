@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/superadmin';
+export class AuthAdminService {
+  private apiUrl = 'http://localhost:8080/api/admins'; // Adjust URL as needed
   private loggedIn = new BehaviorSubject<boolean>(false);
-  private superAdminId = new BehaviorSubject<number | null>(null);
-  private rememberMe = new BehaviorSubject<boolean>(false);
+  private adminId = new BehaviorSubject<number | null>(null);
+  private rememberMe = new BehaviorSubject<boolean>(false); // New BehaviorSubject for remember me
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkSession();
@@ -25,14 +25,16 @@ export class AuthService {
         map(response => {
           if (response.message === 'Login successful') {
             this.loggedIn.next(true);
-            this.superAdminId.next(response.superAdmin.id);
+            this.adminId.next(response.admin.id);
             this.rememberMe.next(stayConnected);
 
-            // Storing the remember me status in localStorage
+            // Storing the remember me status and Admin ID in localStorage
             if (stayConnected) {
-              localStorage.setItem('SuperAdmin_ID', response.superAdmin.id.toString());
+              localStorage.setItem('ADMIN_SESSION_COOKIE', response.cookieDetails.value);
+              localStorage.setItem('Admin_ID', response.admin.id.toString());
             } else {
-              localStorage.removeItem('SuperAdmin_ID');
+              localStorage.removeItem('ADMIN_SESSION_COOKIE');
+              localStorage.removeItem('Admin_ID');
             }
             return true;
           } else {
@@ -50,8 +52,8 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
-  getSuperAdminId(): Observable<number | null> {
-    return this.superAdminId.asObservable();
+  getAdminId(): Observable<number | null> {
+    return this.adminId.asObservable();
   }
 
   isRememberMeChecked(): Observable<boolean> {
@@ -59,28 +61,30 @@ export class AuthService {
   }
 
   private checkSession(): void {
-    const storedSuperAdminId = localStorage.getItem('SuperAdmin_ID');
-  
-    if (storedSuperAdminId) {
+    const sessionCookie = localStorage.getItem('ADMIN_SESSION_COOKIE');
+    const storedAdminId = localStorage.getItem('Admin_ID');
+
+    if (sessionCookie && storedAdminId) {
       this.loggedIn.next(true);
-      this.superAdminId.next(parseInt(storedSuperAdminId, 10));
+      this.adminId.next(parseInt(storedAdminId, 10));
       this.rememberMe.next(true);
     } else {
       this.loggedIn.next(false);
-      this.superAdminId.next(null);
+      this.adminId.next(null);
       this.rememberMe.next(false);
     }
   }
-  
+
   logout(): void {
     this.http.post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
       next: () => {
         this.loggedIn.next(false);
-        this.superAdminId.next(null);
+        this.adminId.next(null);
         this.rememberMe.next(false);
-  
-        localStorage.removeItem('SuperAdmin_ID');
-  
+
+        localStorage.removeItem('ADMIN_SESSION_COOKIE');
+        localStorage.removeItem('Admin_ID');
+
         this.router.navigate(['/home']); // Redirect to home page after logout
       },
       error: (err) => {

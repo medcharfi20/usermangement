@@ -17,6 +17,10 @@ import { UserComponent } from './user/user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
+import { AuthAdminGuard } from './auth-admin.guard';
+import { LoginAdminComponent } from './login-admin/login-admin.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { UpdateAdminProfileComponent } from './update-admin-profile/update-admin-profile.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -33,7 +37,13 @@ const routes: Routes = [
   {path:'adminpage',component:AdminPageComponent},
   {path:'users',component:UserComponent},
   {path:'updateuser/:id',component:UpdateUserComponent},
-  {path:'login',component:LoginComponent}
+  {path:'login',component:LoginComponent},
+  {path:'loginadmin',component:LoginAdminComponent },
+  { path:'profileadmin/:id', component: AdminProfileComponent,canActivate:[AuthAdminGuard] },
+  {path:'updateprofileadmin/:id',component:UpdateAdminProfileComponent}
+
+
+  
 
 ];
 

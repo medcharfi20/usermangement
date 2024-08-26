@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Admin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSuperAdmin" aria-controls="navbarSuperAdmin" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSuperAdmin">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="login-container">
+  <div class="login-header">
+    <h2>Admin Login</h2>
+  </div>
+  <form (ngSubmit)="onLogin()" class="login-form">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        class="form-control"
+        placeholder="Enter your email"
+      />
+    </div>
+
+    <div class="form-group password-group">
+      <label for="password">Password</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        class="form-control"
+        placeholder="Enter your password"
+      />
+      <span (click)="toggleShowPassword()" class="toggle-password">
+        {{ showPassword ? 'Hide' : 'Show' }}
+      </span>
+    </div>
+
+    <div class="form-group stay-connected-group">
+      <label for="stayConnected">
+        <input
+          type="checkbox"
+          id="stayConnected"
+          [(ngModel)]="stayConnected"
+          name="stayConnected"
+        />
+        Stay Connected
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
+  </form>
+
+  <div *ngIf="loginError" class="alert alert-danger mt-3">
+    {{ loginError }}
+  </div>
+</div>

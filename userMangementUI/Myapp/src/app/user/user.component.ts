@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { UserListComponent } from '../user-list/user-list.component';
 import { filter } from 'rxjs/operators';
+import { AdminService } from '../admin.service';
+import { AuthAdminService } from '../auth-admin.service'; // Corrected import
 
 @Component({
   selector: 'app-user',
@@ -9,13 +11,15 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  adminId: number | null = null;
+
   showAddUserForm: boolean = false;  // Controls the visibility of the "Add User" form
   showUserList: boolean = true;  // Controls the visibility of the user list
 
   // Reference to UserListComponent for reloading the user list when necessary
   @ViewChild(UserListComponent) userListComponent!: UserListComponent;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private adminService: AdminService, private authAdminService: AuthAdminService) { // Fixed constructor parameter
     // Listen to router events to determine when to show the user list
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -27,7 +31,17 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showList();  // Show the user list by default when the component initializes
+    this.showList(); 
+    this.authAdminService.getAdminId().subscribe(id => {
+      if (id !== null) {
+        this.adminService.getAdminById(id).subscribe(admin => {
+          this.adminId = admin.id;
+        });
+      } else {
+        console.error('No admin ID found, redirecting to login.');
+        this.router.navigate(['/loginadmin']);
+      }
+    });
   }
 
   // Method to display the "Add User" form
@@ -44,5 +58,13 @@ export class UserComponent implements OnInit {
       this.userListComponent.loadUsers();  
     }
   }
-  }
 
+  navigateToProfile(): void {
+    if (this.adminId !== null) {
+      this.router.navigate([`/profileadmin/${this.adminId}`]);
+    } else {
+      console.error('Admin ID is null. Redirecting to login.');
+      this.router.navigate(['/loginadmin']);
+    }
+  }
+}

@@ -1,0 +1,120 @@
+<div class="container mt-4">
+    <h2>Update Admin Profile</h2>
+  
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nom">First Name</label>
+        <input
+          id="nom"
+          formControlName="nom"
+          class="form-control"
+          [ngClass]="{'is-invalid': submitted && updateForm.get('nom')?.invalid}"
+        />
+        <div *ngIf="submitted && updateForm.get('nom')?.invalid" class="invalid-feedback">
+          <div *ngIf="updateForm.get('nom')?.hasError('required')">First Name is required.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="prenom">Last Name</label>
+        <input
+          id="prenom"
+          formControlName="prenom"
+          class="form-control"
+          [ngClass]="{'is-invalid': submitted && updateForm.get('prenom')?.invalid}"
+        />
+        <div *ngIf="submitted && updateForm.get('prenom')?.invalid" class="invalid-feedback">
+          <div *ngIf="updateForm.get('prenom')?.hasError('required')">Last Name is required.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [ngClass]="{'is-invalid': submitted && updateForm.get('email')?.invalid}"
+        />
+        <div *ngIf="submitted && updateForm.get('email')?.invalid" class="invalid-feedback">
+          <div *ngIf="updateForm.get('email')?.hasError('required')">Email is required.</div>
+          <div *ngIf="updateForm.get('email')?.hasError('email')">Email must be a valid email address.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="numeroTelephone">Phone Number</label>
+        <input
+          id="numeroTelephone"
+          formControlName="numeroTelephone"
+          class="form-control"
+          [ngClass]="{'is-invalid': submitted && updateForm.get('numeroTelephone')?.invalid}"
+        />
+        <div *ngIf="submitted && updateForm.get('numeroTelephone')?.invalid" class="invalid-feedback">
+          <div *ngIf="updateForm.get('numeroTelephone')?.hasError('required')">Phone Number is required.</div>
+          <div *ngIf="updateForm.get('numeroTelephone')?.hasError('pattern')">Phone Number must be exactly 8 digits.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="dateDeNaissance">Date of Birth</label>
+        <input
+          id="dateDeNaissance"
+          formControlName="dateDeNaissance"
+          type="date"
+          class="form-control"
+          [ngClass]="{'is-invalid': submitted && updateForm.get('dateDeNaissance')?.invalid}"
+        />
+        <div *ngIf="submitted && updateForm.get('dateDeNaissance')?.invalid" class="invalid-feedback">
+          <div *ngIf="updateForm.get('dateDeNaissance')?.hasError('required')">Date of Birth is required.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input
+            id="password"
+            formControlName="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            class="form-control"
+            [ngClass]="{'is-invalid': submitted && updateForm.get('password')?.invalid}"
+          />
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="togglePasswordVisibility()"
+            >
+              {{ passwordVisible ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </div>
+        <div class="form-check mt-2">
+        </div>
+        <div *ngIf="submitted && updateForm.get('password')?.invalid" class="invalid-feedback">
+          <div *ngIf="updateForm.get('password')?.hasError('required')">Password is required.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="role">Role</label>
+        <div id="role" class="form-control">{{ currentRole }}</div>
+      </div>
+  
+      <div class="form-group mt-2">
+        <label for="photo">Profile Photo</label>
+        <input
+          id="photo"
+          type="file"
+          (change)="onFileChange($event)"
+          class="form-control-file"
+        />
+        <img *ngIf="photoPreview" [src]="photoPreview" alt="Photo Preview" class="mt-2" style="max-width: 200px; max-height: 200px;" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3">Update Profile</button>
+      <button type="button" (click)="goBackToProfile()" class="btn btn-secondary mt-3">Back to Profile</button>
+    </form>
+  </div>
+  

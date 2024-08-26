@@ -1,0 +1,17 @@
+.profile-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the container */
+    width: 100%; /* Full width of the container */
+    background-color: white;
+    border-radius: 8px; /* Optional: Adds rounded corners to the container */
+    overflow: hidden; /* Hides overflow */
+  }
+  
+  .profile-photo {
+    width: 100%; /* Ensures the image stretches to fill the container */
+    height: 100%; /* Ensures the image stretches to fill the container */
+    object-fit: contain; /* Scales the image to fit the container while preserving aspect ratio */
+  }
+  
