@@ -30,8 +30,7 @@ public class DataInitializer {
                 ); 
             }
         } catch (Exception e) {
-            // Use a logger for better error handling and tracking
-            e.printStackTrace(); // Consider using Logger instead
+            e.printStackTrace(); 
             throw new RuntimeException("Failed to initialize data", e);
         }
     }

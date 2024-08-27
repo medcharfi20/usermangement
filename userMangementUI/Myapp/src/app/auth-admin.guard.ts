@@ -18,13 +18,13 @@ export class AuthAdminGuard implements CanActivate {
     return this.authAdminService.isLoggedIn().pipe(
       map(isLoggedIn => {
         if (!isLoggedIn) {
-          this.router.navigate(['/login-admin']); // Redirect to login if not logged in
+          this.router.navigate(['/loginadmin']); 
           return false;
         }
         return true;
       }),
       catchError(() => {
-        this.router.navigate(['/login-admin']); // Redirect to login in case of an error
+        this.router.navigate(['/loginadmin']); 
         return of(false);
       })
     );

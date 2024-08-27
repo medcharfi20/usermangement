@@ -32,6 +32,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoginAdminComponent } from './login-admin/login-admin.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { UpdateAdminProfileComponent } from './update-admin-profile/update-admin-profile.component';
+import { LoginUserComponent } from './login-user/login-user.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UpdateUserProfileComponent } from './update-user-profile/update-user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +58,10 @@ import { UpdateAdminProfileComponent } from './update-admin-profile/update-admin
     LoginComponent,
     LoginAdminComponent,
     AdminProfileComponent,
-    UpdateAdminProfileComponent
+    UpdateAdminProfileComponent,
+    LoginUserComponent,
+    UserProfileComponent,
+    UpdateUserProfileComponent
   ],
   imports: [
     BrowserModule,

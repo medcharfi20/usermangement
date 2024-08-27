@@ -1,0 +1,17 @@
+.profile-photo {
+    max-width: 250px; 
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: block;
+  }
+  
+  .position-relative {
+    position: relative;
+  }
+  
+  .fas.fa-eye {
+    font-size: 1.2em;
+    color: #aaa;
+  }
+  

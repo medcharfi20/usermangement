@@ -7,53 +7,60 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthAdminService {
-  private apiUrl = 'http://localhost:8080/api/admins'; 
+export class AuthUserService {
+  private apiUrl = 'http://localhost:8080/api/users'; 
   private loggedIn = new BehaviorSubject<boolean>(false);
-  private adminId = new BehaviorSubject<number | null>(null);
+  private userId = new BehaviorSubject<number | null>(null);
   private rememberMe = new BehaviorSubject<boolean>(false); // New BehaviorSubject for remember me
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkSession();
   }
 
-  login(email: string, password: string, stayConnected: boolean): Observable<boolean> {
+  login(email: string, password: string, stayConnected: boolean): Observable<{ success: boolean; message?: string; userId?: number }> {
     const loginRequest = { email, password, stayConnected };
-
+  
     return this.http.post<any>(`${this.apiUrl}/login`, loginRequest, { withCredentials: true })
       .pipe(
         map(response => {
           if (response.message === 'Login successful') {
             this.loggedIn.next(true);
-            this.adminId.next(response.admin.id);
+            this.userId.next(response.user.id);
             this.rememberMe.next(stayConnected);
-
-            // Storing the remember me status and Admin ID in localStorage
             if (stayConnected) {
-              localStorage.setItem('ADMIN_SESSION_COOKIE', response.cookieDetails.value);
-              localStorage.setItem('Admin_ID', response.admin.id.toString());
+              localStorage.setItem('USER_SESSION_COOKIE', response.cookieDetails.value);
+              localStorage.setItem('User_ID', response.user.id.toString());
             } else {
-              localStorage.removeItem('ADMIN_SESSION_COOKIE');
-              localStorage.removeItem('Admin_ID');
-            }
-            return true;
+              localStorage.removeItem('USER_SESSION_COOKIE');
+              localStorage.removeItem('User_ID');
+            }  
+            return { success: true, userId: response.user.id };
           } else {
-            return false;
+            return { success: false, message: response.message };
           }
         }),
         catchError(error => {
           console.error('Login error', error);
-          return of(false);
+          let errorMsg = 'An unexpected error occurred during login.';
+          if (error.status === 401) {
+            errorMsg = 'Invalid email or password.';
+          } else if (error.status === 403) {
+            errorMsg = 'Your account is blocked. Please contact support.';
+          }
+          return of({ success: false, message: errorMsg });
         })
       );
   }
-
+  
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
 
-  getAdminId(): Observable<number | null> {
-    return this.adminId.asObservable();
+  getUserId(): Observable<number | null> {
+    return this.userId.asObservable();
+  }
+  setUserId(id: number): void {
+    this.userId.next(id);
   }
 
   isRememberMeChecked(): Observable<boolean> {
@@ -61,16 +68,16 @@ export class AuthAdminService {
   }
 
   private checkSession(): void {
-    const sessionCookie = localStorage.getItem('ADMIN_SESSION_COOKIE');
-    const storedAdminId = localStorage.getItem('Admin_ID');
+    const sessionCookie = localStorage.getItem('USER_SESSION_COOKIE');
+    const storedUserId = localStorage.getItem('User_ID');
 
-    if (sessionCookie && storedAdminId) {
+    if (sessionCookie && storedUserId) {
       this.loggedIn.next(true);
-      this.adminId.next(parseInt(storedAdminId, 10));
+      this.userId.next(parseInt(storedUserId, 10));
       this.rememberMe.next(true);
     } else {
       this.loggedIn.next(false);
-      this.adminId.next(null);
+      this.userId.next(null);
       this.rememberMe.next(false);
     }
   }
@@ -79,13 +86,13 @@ export class AuthAdminService {
     this.http.post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
       next: () => {
         this.loggedIn.next(false);
-        this.adminId.next(null);
+        this.userId.next(null);
         this.rememberMe.next(false);
 
-        localStorage.removeItem('ADMIN_SESSION_COOKIE');
-        localStorage.removeItem('Admin_ID');
+        localStorage.removeItem('USER_SESSION_COOKIE');
+        localStorage.removeItem('User_ID');
 
-        this.router.navigate(['/home']); 
+        this.router.navigate(['/home']); // Redirect to home page after logout
       },
       error: (err) => {
         console.error('Logout error', err);

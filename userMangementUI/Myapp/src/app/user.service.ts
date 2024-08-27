@@ -82,10 +82,8 @@ export class UserService {
     };
   }
 
-  // Handle errors
   private handleError(error: any) {
     console.error('An error occurred:', error); 
-    // Log the error details for debugging
     return throwError(() => new Error('Something went wrong; please try again later.'));
   }
 }

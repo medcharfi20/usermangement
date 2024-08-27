@@ -10,12 +10,10 @@ export class SuperAdminService {
 
   constructor(private http: HttpClient) {}
 
-  // Fetch user data by ID (number)
   getUserData(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  // Update user data (userId should be a number if that's the consistent type across your application)
   updateUser(userId: number, formData: FormData): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${userId}`, formData, {
       headers: {

@@ -13,12 +13,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import tn.hydatis.userMangement.exception.EmailAlreadyExistsException;
+import tn.hydatis.userMangement.exception.InvalidCredentialsException;
+import tn.hydatis.userMangement.exception.UserBlockedException;
+import tn.hydatis.userMangement.login.CookieDetails;
+import tn.hydatis.userMangement.login.LoginRequest;
+import tn.hydatis.userMangement.login.LoginResponseUser;
 import tn.hydatis.userMangement.model.User;
 import tn.hydatis.userMangement.service.UserService;
 
@@ -104,5 +113,51 @@ public class UserController {
     public ResponseEntity<List<User>> searchUsers(@RequestParam String query) {
         List<User> users = userService.searchUsersByName(query);
         return ResponseEntity.ok(users);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseUser> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        try {
+            User user = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+
+            CookieDetails cookieDetails = null;
+            if (loginRequest.isStayConnected()) {
+                Cookie cookie = new Cookie("USER_SESSION_COOKIE", "SESSION_VALUE");
+                cookie.setMaxAge(604800); 
+                cookie.setHttpOnly(true);
+                cookie.setSecure(true);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                cookieDetails = new CookieDetails(cookie.getName(), cookie.getValue(), cookie.getMaxAge());
+            }
+
+            user.setPassword(null); 
+            LoginResponseUser loginResponse = new LoginResponseUser(
+                    "Login successful",
+                    loginRequest.isStayConnected(),
+                    cookieDetails,
+                    user
+            );
+            return ResponseEntity.ok(loginResponse);
+
+        } catch (UserBlockedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new LoginResponseUser(e.getMessage(), false, null, null));
+        } catch (InvalidCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponseUser(e.getMessage(), false, null, null));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode())
+                    .body(new LoginResponseUser(e.getReason(), false, null, null));
+        }
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("USER_SESSION_COOKIE", null);
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return ResponseEntity.noContent().build();
     }
 }

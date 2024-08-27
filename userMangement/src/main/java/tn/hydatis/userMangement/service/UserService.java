@@ -14,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.transaction.Transactional;
 import tn.hydatis.userMangement.exception.EmailAlreadyExistsException;
+import tn.hydatis.userMangement.exception.InvalidCredentialsException;
+import tn.hydatis.userMangement.exception.UserBlockedException;
 import tn.hydatis.userMangement.model.User;
 import tn.hydatis.userMangement.repository.UserRepository;
 
@@ -118,4 +120,27 @@ public class UserService {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
     }
+    public User authenticate(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Check if the user is blocked
+            if (user.isBlocked()) {
+                throw new UserBlockedException("Your account is blocked. Please contact support.");
+            }
+
+            // Validate the password
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            } else {
+                throw new InvalidCredentialsException("Invalid email or password");
+            }
+        } else {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+    }
+
+
 }

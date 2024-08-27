@@ -11,7 +11,6 @@ import tn.hydatis.userMangement.model.SuperAdmin;
 public class LoginResponse extends LoginResponsePrincipale {
     private SuperAdmin superAdmin;
 
-    // Constructor that sets both the superclass fields and the superAdmin field
     public LoginResponse(String message, boolean stayConnected, CookieDetails cookieDetails, SuperAdmin superAdmin) {
         super(message, stayConnected, cookieDetails); // Call to the superclass constructor
         this.superAdmin = superAdmin;

@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">User</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUser" aria-controls="navbarUser" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarUser">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container login-container">
+  <h2 class="login-title">User Login</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="login-form">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control"
+        placeholder="Enter your email"
+      />
+      <div *ngIf="f['email'].touched && f['email'].invalid" class="error-message mt-2">
+        <div *ngIf="f['email'].errors?.['required']">Email is required.</div>
+        <div *ngIf="f['email'].errors?.['email']">Invalid email format.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password:</label>
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="Enter your password"
+        />
+        <span class="input-group-text">
+          <input
+            type="checkbox"
+            (change)="togglePasswordVisibility()"
+            aria-label="Show password"
+          />
+          <span class="ms-2">Show</span>
+        </span>
+      </div>
+      <div *ngIf="f['password'].touched && f['password'].invalid" class="error-message mt-2">
+        <div *ngIf="f['password'].errors?.['required']">Password is required.</div>
+      </div>
+    </div>
+
+    <div class="mb-3 form-check">
+      <input
+        type="checkbox"
+        formControlName="stayConnected"
+        class="form-check-input"
+        id="stayConnected"
+      />
+      <label class="form-check-label" for="stayConnected">Stay Connected</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+
+    <div *ngIf="loginError" class="error-message mt-3">
+      {{ loginError }}
+    </div>
+  </form>
+</div>

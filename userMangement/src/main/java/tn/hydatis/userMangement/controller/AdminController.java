@@ -135,14 +135,14 @@ public class AdminController {
             CookieDetails cookieDetails = null;
             if (loginRequest.isStayConnected()) {
                 Cookie cookie = new Cookie("ADMIN_SESSION_COOKIE", "SESSION_VALUE");
-                cookie.setMaxAge(604800); // Set max age to 1 week
+                cookie.setMaxAge(604800); 
                 cookie.setHttpOnly(true);
                 cookie.setSecure(true);
-                cookie.setPath("/"); // Ensure the cookie is available to the entire app
+                cookie.setPath("/"); 
                 response.addCookie(cookie);
                 cookieDetails = new CookieDetails(cookie.getName(), cookie.getValue(), cookie.getMaxAge());
             } else {
-                // Clear any existing session cookie
+                
                 Cookie cookie = new Cookie("ADMIN_SESSION_COOKIE", null);
                 cookie.setMaxAge(0);
                 cookie.setHttpOnly(true);
@@ -173,6 +173,4 @@ public class AdminController {
         response.addCookie(cookie);
         return ResponseEntity.noContent().build();
     }
-
-    
 }

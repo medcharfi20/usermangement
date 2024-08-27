@@ -15,11 +15,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable() // Disable CSRF for simplicity, use with caution
+        http.csrf().disable()
             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers("/api/superadmin/login").permitAll()
                 .requestMatchers("/api/superadmin/**").permitAll() 
-                .requestMatchers("/api/roles/**").permitAll() 
+                .requestMatchers("/api/roles/**").permitAll()
+                .requestMatchers("/api/users/login").permitAll()
                 .requestMatchers("/api/users/**").permitAll() 
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/api/admins/login").permitAll()

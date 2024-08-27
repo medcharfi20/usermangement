@@ -1,0 +1,50 @@
+/* styles.css or login-user.component.css */
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  
+  .login-title {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .login-form .form-control {
+    border-radius: 5px;
+  }
+  
+  .input-group {
+    position: relative;
+  }
+  
+  .input-group .input-group-text {
+    cursor: pointer;
+  }
+  
+  .error-message {
+    color: #dc3545;
+  }
+  
+  .error-message div {
+    margin-bottom: 5px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  

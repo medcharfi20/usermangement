@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SharedRoleService {
-  private baseUrl = 'http://localhost:8080/api/roles'; // Adjust as necessary
+  private baseUrl = 'http://localhost:8080/api/roles'; 
 
   constructor(private http: HttpClient) {}
 
@@ -47,7 +47,7 @@ export class SharedRoleService {
     );
   }
 
-  deleteAllRoles(): Observable<void> { // Add this method
+  deleteAllRoles(): Observable<void> { 
     return this.http.delete<void>(this.baseUrl).pipe(
       catchError(this.handleError)
     );
