@@ -1,0 +1,64 @@
+<div class="forget-user-container">
+    <h2>Forget User</h2>
+    
+    <form [formGroup]="forgetUserForm" (ngSubmit)="onSubmit()" class="forget-user-form">
+      
+      <div class="form-group">
+        <label for="firstname">First Name:</label>
+        <input id="firstname" formControlName="firstname" type="text" class="form-control" />
+      </div>
+      
+      <div class="form-group">
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" formControlName="lastname" type="text" class="form-control" />
+      </div>
+      
+      <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input id="dateOfBirth" formControlName="dateOfBirth" type="date" class="form-control" />
+      </div>
+      
+      <div class="form-group">
+        <label for="numeroTelephone">Phone Number:</label>
+        <input id="numeroTelephone" formControlName="numeroTelephone" type="text" class="form-control" />
+      </div>
+      
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="action" (change)="onActionTypeChange('retrieveEmail')" [checked]="actionType === 'retrieveEmail'" />
+          Retrieve Email
+        </label>
+        <label>
+          <input type="radio" name="action" (change)="onActionTypeChange('changePassword')" [checked]="actionType === 'changePassword'" />
+          Change Password
+        </label>
+      </div>
+      
+      <div *ngIf="actionType === 'changePassword'" class="form-group">
+        <label for="newPassword">New Password:</label>
+        <div class="password-container">
+          <input id="newPassword" formControlName="newPassword" [type]="passwordVisible ? 'text' : 'password'" class="form-control" />
+          <label class="show-password-label">
+            <input type="checkbox" (change)="togglePasswordVisibility()" />
+            Show Password
+          </label>
+        </div>
+      </div>
+      
+      <div *ngIf="actionType === 'changePassword'" class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input id="fullName" formControlName="fullName" type="text" class="form-control" />
+      </div>
+      
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a routerLink="/loginuser" class="btn btn-link">Back to Login</a>
+      </div>
+      
+      <div *ngIf="actionType === 'changePassword'" class="remark">
+        <p>Please wait while we process your request. Changing the password may take a few moments.</p>
+      </div>
+      
+    </form>
+  </div>
+  

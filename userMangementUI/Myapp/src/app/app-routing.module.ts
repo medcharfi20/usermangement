@@ -25,6 +25,9 @@ import { LoginUserComponent } from './login-user/login-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UpdateUserProfileComponent } from './update-user-profile/update-user-profile.component';
 import { AuthUserGuard } from './auth-user.guard';
+import { ForgetComponent } from './forget/forget.component';
+import { ForgetAdminComponent } from './forget-admin/forget-admin.component';
+import { ForgetUserComponent } from './forget-user/forget-user.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -47,11 +50,10 @@ const routes: Routes = [
   {path:'updateprofileadmin/:id',component:UpdateAdminProfileComponent},
   {path:'loginuser',component:LoginUserComponent},
   { path:'profileuser/:id', component: UserProfileComponent,canActivate:[AuthUserGuard] },
-  {path:'updateprofileuser/:id',component:UpdateUserProfileComponent}
-
-
-  
-
+  {path:'updateprofileuser/:id',component:UpdateUserProfileComponent},
+  {path:'forget',component:ForgetComponent},
+  {path:'forgetadmin',component:ForgetAdminComponent},
+  {path:'forgetuser',component:ForgetUserComponent}
 ];
 
 @NgModule({

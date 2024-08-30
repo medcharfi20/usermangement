@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -71,6 +71,38 @@ export class AdminService {
       catchError(this.handleError)
     );
   }
+  retrieveEmail(firstname: string, lastname: string, dateOfBirth: string, numeroTelephone: string): Observable<string> {
+    const params = new HttpParams()
+      .set('nom', firstname)
+      .set('prenom', lastname)
+      .set('numeroTelephone', numeroTelephone)
+      .set('dateDeNaissance', dateOfBirth);
+    return this.http.get<string>(`${this.url}/retrieve-email`, { params, responseType: 'text' as 'json' })
+      .pipe(
+        catchError(error => {
+          console.error('An error occurred while retrieving email:', error);
+          return throwError(() => new Error('Failed to retrieve email; please try again later.'));
+        })
+      );
+  }
+
+  changePassword(firstname: string, lastname: string, dateOfBirth: string, numeroTelephone: string, newPassword: string,fullName:string): Observable<any> {
+    const params = new HttpParams()
+      .set('nom', firstname)
+      .set('prenom', lastname)
+      .set('dateDeNaissance', dateOfBirth)
+      .set('numeroTelephone', numeroTelephone)
+      .set('newPassword', newPassword)
+      .set('fullName',fullName);
+    return this.http.post<any>(`${this.url}/change-password`, null, { params, responseType: 'text' as 'json' })
+      .pipe(
+        catchError(error => {
+          console.error('An error occurred while changing password:', error);
+          return throwError(() => new Error('Failed to change password; please try again later.'));
+        })
+      );
+  }
+
 
   private handleError(error: any) {
     console.error('An error occurred:', error);

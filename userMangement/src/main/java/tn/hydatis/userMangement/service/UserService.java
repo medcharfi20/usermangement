@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import tn.hydatis.userMangement.exception.EmailAlreadyExistsException;
 import tn.hydatis.userMangement.exception.InvalidCredentialsException;
@@ -28,6 +29,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private EmailService emailService; 
+    
     @Transactional
     public User saveUser(String nom, String prenom, String email, String password, LocalDate dateDeNaissance, String numeroTelephone, MultipartFile photo) throws IOException {
         validateUserFields(nom, prenom, email, password);
@@ -139,6 +143,38 @@ public class UserService {
             }
         } else {
             throw new InvalidCredentialsException("Invalid email or password");
+        }
+    }
+    @Transactional
+    public Optional<String> getUserEmail(String nom, String prenom, String numeroTelephone, LocalDate dateDeNaissance) {
+        return userRepository
+                .findByNomAndPrenomAndNumeroTelephoneAndDateDeNaissance(nom, prenom, numeroTelephone, dateDeNaissance)
+                .map(User::getEmail);
+    }
+
+    @Transactional
+    public boolean changeUserPassword(String nom, String prenom, String numeroTelephone, LocalDate dateDeNaissance, String newPassword, String fullName) {
+        Optional<User> userOpt = userRepository.findByNomAndPrenomAndNumeroTelephoneAndDateDeNaissance(nom, prenom, numeroTelephone, dateDeNaissance);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            // Send the new password before hashing, using the concatenated full name
+            try {
+                emailService.sendPasswordResetEmail(user.getEmail(), fullName, newPassword);
+            } catch (MessagingException e) {
+                // Handle the exception as needed
+                return false;
+            }
+
+            // Hash the password and update the user record
+            String hashedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(hashedPassword);
+            userRepository.save(user);
+
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -81,7 +81,34 @@ export class UserService {
       isBlocked: user.blocked // Convert `blocked` to `isBlocked`
     };
   }
+  retrieveEmail(firstname: string, lastname: string, dateOfBirth: string, numeroTelephone: string): Observable<string> {
+    const params = new HttpParams()
+      .set('nom', firstname)
+      .set('prenom', lastname)
+      .set('numeroTelephone', numeroTelephone)
+      .set('dateDeNaissance', dateOfBirth);
+    
+    return this.http.get<string>(`${this.url}/retrieve-email`, { params, responseType: 'text' as 'json' })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
+  // Change password for a user
+  changePassword(firstname: string, lastname: string, dateOfBirth: string, numeroTelephone: string, newPassword: string, fullName: string): Observable<any> {
+    const params = new HttpParams()
+      .set('nom', firstname)
+      .set('prenom', lastname)
+      .set('dateDeNaissance', dateOfBirth)
+      .set('numeroTelephone', numeroTelephone)
+      .set('newPassword', newPassword)
+      .set('fullName', fullName);
+    
+    return this.http.post<any>(`${this.url}/change-password`, null, { params, responseType: 'text' as 'json' })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
   private handleError(error: any) {
     console.error('An error occurred:', error); 
     return throwError(() => new Error('Something went wrong; please try again later.'));

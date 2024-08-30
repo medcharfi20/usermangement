@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -159,5 +160,31 @@ public class UserController {
         cookie.setPath("/");
         response.addCookie(cookie);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/retrieve-email")
+    public ResponseEntity<String> retrieveEmail(
+            @RequestParam String nom,
+            @RequestParam String prenom,
+            @RequestParam String numeroTelephone,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDeNaissance) {
+        Optional<String> email = userService.getUserEmail(nom, prenom, numeroTelephone, dateDeNaissance);
+        return email.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found"));
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(
+            @RequestParam String nom,
+            @RequestParam String prenom,
+            @RequestParam String numeroTelephone,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDeNaissance,
+            @RequestParam String newPassword,
+            @RequestParam String fullName) {
+        boolean result = userService.changeUserPassword(nom, prenom, numeroTelephone, dateDeNaissance, newPassword, fullName);
+        if (result) {
+            return ResponseEntity.ok("Password changed successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found or error occurred");
+        }
     }
 }

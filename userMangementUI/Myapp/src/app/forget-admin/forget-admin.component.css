@@ -1,0 +1,125 @@
+/* Container for the forget password component */
+.forget-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Form styling */
+  .form-style {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for form groups */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  /* Style for form control elements */
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  /* Styling for buttons */
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  /* Primary button style */
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Success button style */
+  .btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+  }
+  
+  /* Button link style */
+  .btn-link {
+    color: #007bff;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Centering text */
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Password visibility toggle button */
+  .toggle-password-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+  }
+  
+  .password-wrapper {
+    position: relative;
+  }
+  
+  /* Radio buttons container */
+  .form-group text-center {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    margin: 0 15px;
+  }
+  
+  /* Responsive design for small screens */
+  @media (max-width: 576px) {
+    .btn {
+      width: 100%;
+    }
+  
+    .password-wrapper {
+      display: flex;
+      align-items: center;
+    }
+  
+    .toggle-password-btn {
+      margin-left: -35px;
+    }
+  }
+  

@@ -98,4 +98,26 @@ public class SuperAdminService {
         }
         return null;
     }
+    public Optional<String> getSuperAdminEmail(String nom, String prenom, String numeroTelephone, LocalDate dateDeNaissance) {
+        return superAdminRepository.findByNomAndPrenomAndNumeroTelephoneAndDateDeNaissance(
+                nom, prenom, numeroTelephone, dateDeNaissance)
+                .map(SuperAdmin::getEmail);
+    }
+    public boolean changeSuperAdminPassword(String nom, String prenom, String numeroTelephone, LocalDate dateDeNaissance, String newPassword) {
+        Optional<SuperAdmin> superAdminOpt = superAdminRepository.findByNomAndPrenomAndNumeroTelephoneAndDateDeNaissance(nom, prenom, numeroTelephone, dateDeNaissance);
+        
+        if (superAdminOpt.isPresent()) {
+            SuperAdmin superAdmin = superAdminOpt.get();
+
+            // Encode the new password with BCrypt
+            String encodedPassword = passwordEncoder.encode(newPassword);
+
+            // Set the encoded password and save
+            superAdmin.setPassword(encodedPassword);
+            superAdminRepository.save(superAdmin);
+            return true;
+        }
+        return false;
+    }
+    
 }

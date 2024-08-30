@@ -35,6 +35,9 @@ import { UpdateAdminProfileComponent } from './update-admin-profile/update-admin
 import { LoginUserComponent } from './login-user/login-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UpdateUserProfileComponent } from './update-user-profile/update-user-profile.component';
+import { ForgetComponent } from './forget/forget.component';
+import { ForgetAdminComponent } from './forget-admin/forget-admin.component';
+import { ForgetUserComponent } from './forget-user/forget-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +64,10 @@ import { UpdateUserProfileComponent } from './update-user-profile/update-user-pr
     UpdateAdminProfileComponent,
     LoginUserComponent,
     UserProfileComponent,
-    UpdateUserProfileComponent
+    UpdateUserProfileComponent,
+    ForgetComponent,
+    ForgetAdminComponent,
+    ForgetUserComponent
   ],
   imports: [
     BrowserModule,

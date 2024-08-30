@@ -1,6 +1,7 @@
 package tn.hydatis.userMangement.controller;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,4 +110,35 @@ public class SuperAdminController {
         response.addCookie(cookie);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/retrieve-email")
+    public ResponseEntity<String> getSuperAdminEmail(
+            @RequestParam String nom,
+            @RequestParam String prenom,
+            @RequestParam String numeroTelephone,
+            @RequestParam LocalDate dateDeNaissance) {
+        Optional<String> email = superAdminService.getSuperAdminEmail(nom, prenom, numeroTelephone, dateDeNaissance);
+        if (email.isPresent()) {
+            return ResponseEntity.ok(email.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid credentials. Unable to retrieve email.");
+        }
+    }
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changeSuperAdminPassword(
+            @RequestParam String nom,
+            @RequestParam String prenom,
+            @RequestParam String numeroTelephone,
+            @RequestParam LocalDate dateDeNaissance,
+            @RequestParam String newPassword) {
+        
+        boolean isPasswordChanged = superAdminService.changeSuperAdminPassword(nom, prenom, numeroTelephone, dateDeNaissance, newPassword);
+        
+        if (isPasswordChanged) {
+            return ResponseEntity.ok("Password changed successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid credentials. Unable to change password.");
+        }
+}
 }

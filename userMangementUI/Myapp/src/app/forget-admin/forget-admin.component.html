@@ -1,0 +1,73 @@
+<div class="forget-container">
+  <h2>Verify Email/Forget Password</h2>
+  <!-- Radio Buttons to Select Process -->
+  <div class="form-group">
+    <label>
+      <input type="radio" name="process" [(ngModel)]="selectedProcess" value="retrieveEmail"> Retrieve Email
+    </label>
+    <label class="ml-3">
+      <input type="radio" name="process" [(ngModel)]="selectedProcess" value="changePassword"> Change Password
+    </label>
+  </div>
+
+  <!-- Retrieve Email Form -->
+  <form *ngIf="selectedProcess === 'retrieveEmail'" (ngSubmit)="retrieveEmail()">
+    <div class="form-group">
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" [(ngModel)]="firstname" name="firstname" required>
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" [(ngModel)]="lastname" name="lastname" required>
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date of Birth:</label>
+      <input type="date" id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth" required>
+    </div>
+    <div class="form-group">
+      <label for="numeroTelephone">Phone Number:</label>
+      <input type="text" id="numeroTelephone" [(ngModel)]="numeroTelephone" name="numeroTelephone" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Retrieve Email</button>
+ </form>
+
+  <!-- Change Password Form -->
+  <form *ngIf="selectedProcess === 'changePassword'" (ngSubmit)="changePassword()" class="mt-4">
+    <div class="form-group">
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" [(ngModel)]="firstname" name="firstname" required>
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" [(ngModel)]="lastname" name="lastname" required>
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date of Birth:</label>
+      <input type="date" id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth" required>
+    </div>
+    <div class="form-group">
+      <label for="numeroTelephone">Phone Number:</label>
+      <input type="text" id="numeroTelephone" [(ngModel)]="numeroTelephone" name="numeroTelephone" required>
+    </div>
+    <div class="form-group">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName" required>
+    </div>
+    <div class="form-group position-relative">
+      <label for="newPassword">New Password:</label>
+      <div class="password-wrapper">
+        <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required>
+        <button type="button" class="toggle-password-btn" (click)="togglePasswordVisibility()">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Change Password</button>
+    <p class="text-info mt-2">Changing password can take moments please wait.</p>
+  </form>
+
+  <!-- Router Link to Login Page -->
+  <div class="text-center mt-4">
+    <a routerLink="/loginadmin" class="btn btn-link">Back to Login</a>
+  </div>
+</div>
